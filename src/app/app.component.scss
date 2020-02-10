@@ -12,6 +12,28 @@ div {
             &.title {
                 letter-spacing: 0.5em;
                 text-transform: uppercase;
+                &.old {
+                    color: darken($default-font-color, 50%);
+                }
+            }
+        }
+    }
+}
+ul {
+    &#filter {
+        list-style-type: none;
+        display: flex;
+
+        li {
+            cursor: pointer;
+            &.active {
+                font-weight: bold;
+            }
+            &:after {
+                content: " - "
+            }
+            &:last-child:after {
+                content: ""
             }
         }
     }

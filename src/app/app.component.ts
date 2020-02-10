@@ -8,31 +8,36 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public title: string = 'movies';
 
-  public defaultCountry: string = 'us';
+  public defaultCountry: string = 'all';
 
   public movies: any[] = [
     {
       title: 'Joker',
       year: 2019,
-      country: 'us'
+      country: 'us',
+      shown: true
     },
     {
       title: 'Avengers',
       year: 2018,
-      country: 'us'
+      country: 'us',
+      shown: true
     },
     {
       title: 'Il était une fois dans l\'ouest',
       year: 1975,
-      country: 'it'
+      country: 'it',
+      shown: true
     }
   ];
 
   public toggleCountry(): void {
-    if (this.defaultCountry == 'us') {
-      this.defaultCountry = 'it';
-    } else {
-      this.defaultCountry = 'us';
-    }
+    this.defaultCountry = 
+      (this.defaultCountry == 'us') ? this.defaultCountry = 'it' 
+                                    : this.defaultCountry = 'us';
+
+    this.movies.forEach((movie: any) => {
+      movie.shown = movie.country == this.defaultCountry;
+    })
   }
 }
