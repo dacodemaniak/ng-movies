@@ -1,3 +1,18 @@
-.old {
-    color: palegreen;
+$default-font-color: hsl(200, 52%, 25%);
+
+div {
+    color: $default-font-color;
+    &.movie {
+        min-width: 10em;
+        width: auto;
+        min-height: 5em;
+        height: auto;
+
+        h2 {
+            &.title {
+                letter-spacing: 0.5em;
+                text-transform: uppercase;
+            }
+        }
+    }
 }
