@@ -1,4 +1,4 @@
-<p>Hey, i'm AppComponent, my title is {{ title }}</p>
+<p>Hey, i'm AppComponent, my title is {{ title | uppercase }}</p>
 
 <div *ngFor="let movie of movies">
     <div class="movie" *ngIf="movie.country == defaultCountry">
