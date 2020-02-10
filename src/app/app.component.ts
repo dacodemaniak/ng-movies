@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public title: string = 'movies';
 
   public defaultCountry: string = 'all';
@@ -14,22 +14,49 @@ export class AppComponent {
     {
       title: 'Joker',
       year: 2019,
-      country: 'us',
+      country: {
+        iso: 'us',
+        text: 'United States'
+      },
       shown: true
     },
     {
       title: 'Avengers',
       year: 2018,
-      country: 'us',
+      country: {
+        iso: 'us',
+        text: 'United States'
+      },
       shown: true
     },
     {
       title: 'Il était une fois dans l\'ouest',
       year: 1975,
-      country: 'it',
+      country: {
+        iso: 'it',
+        text: 'Italy'
+      },
       shown: true
     }
   ];
+
+  public countries: any[];
+
+  public constructor() {}
+
+  public ngOnInit(): void {
+    this.countries = [... new Set(this.movies.map((movie) => 
+        movie.country.iso
+      )
+    )];
+  }
+
+  public getCountry(country: string): string {
+    const data: any =  this.movies.find((movie: any) => {
+      return movie.country.iso == country;
+    });
+    return data.country.text;
+  }
 
   public toggleCountry(): void {
     this.defaultCountry = 

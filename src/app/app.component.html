@@ -1,7 +1,7 @@
 <h1>{{ title | uppercase }}</h1>
 
 <div *ngFor="let movie of movies">
-    <div class="movie" *ngIf="(movie.country == defaultCountry) || defaultCountry == 'all'">
+    <div class="movie" *ngIf="(movie.country.iso == defaultCountry) || defaultCountry == 'all'">
         <h2 class="title"
             [ngClass]="{'old': movie.year < 2000}"
         >
@@ -11,14 +11,13 @@
     </div>
 </div>
 
-<ul id="filter">
-    <li (click)="defaultCountry='all'" [ngClass]="{'active': defaultCountry=='all'}">
-        [all]
-    </li>
-    <li (click)="defaultCountry='us'" [ngClass]="{'active': defaultCountry=='us'}">
-        [us]
-    </li>
-    <li (click)="defaultCountry='it'" [ngClass]="{'active': defaultCountry=='it'}">
-        [it]
-    </li>
-</ul>
+<div id="filter">
+    <select size="1" [(ngModel)]="defaultCountry">
+        <option value="all" selected>
+            All
+        </option>
+        <option *ngFor="let country of countries" value="{{ country }}">
+            {{ getCountry(country) }}
+        </option>
+    </select>
+</div>
