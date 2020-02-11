@@ -1,23 +1,22 @@
-<h1>{{ title | uppercase }}</h1>
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a [routerLink]="['home']">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="['login']">
+                    Login
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
 
-<div *ngFor="let movie of movies">
-    <div class="movie" *ngIf="(movie.country.iso == defaultCountry) || defaultCountry == 'all'">
-        <h2 class="title"
-            [ngClass]="{'old': movie.year < 2000}"
-        >
-            {{ movie.title }}
-        </h2>
-        <h3>{{ movie.year }}</h3>
-    </div>
-</div>
+<router-outlet></router-outlet>
 
-<div id="filter">
-    <select size="1" [(ngModel)]="defaultCountry">
-        <option value="all" selected>
-            All
-        </option>
-        <option *ngFor="let data of countries | keyvalue" value="{{ data.key }}">
-            {{ data.value.text }}
-        </option>
-    </select>
-</div>
+<footer>
+    Here my footer
+</footer>
