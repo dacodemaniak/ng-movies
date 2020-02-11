@@ -22,6 +22,9 @@ import { UiModule } from './shared/ui/ui.module';
     FormsModule,
     UiModule
   ],
+  exports: [
+    AppRoutingModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
