@@ -16,8 +16,8 @@
         <option value="all" selected>
             All
         </option>
-        <option *ngFor="let country of countries" value="{{ country }}">
-            {{ getCountry(country) }}
+        <option *ngFor="let data of countries | keyvalue" value="{{ data.key }}">
+            {{ data.value.text }}
         </option>
     </select>
 </div>

@@ -40,15 +40,14 @@ export class AppComponent implements OnInit {
     }
   ];
 
-  public countries: any[];
+  public countries: Map<string, any> = new Map<string, any>();
 
   public constructor() {}
 
   public ngOnInit(): void {
-    this.countries = [... new Set(this.movies.map((movie) => 
-        movie.country.iso
-      )
-    )];
+    this.movies.forEach((movie: any) => {
+      this.countries.set(movie.country.iso, movie.country);
+    });
   }
 
   public getCountry(country: string): string {
