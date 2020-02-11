@@ -14,10 +14,11 @@ export class HomeComponent implements OnInit {
   public title: string = 'movies';
 
   public year: number = 0;
-
+  public years: number[] = [];
+  
   public movies: Movie[] = [];
 
-  public years: number[] = [];
+  
 
   constructor(
     private movieService: MovieService
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
 
     const years: Set<number> = new Set<number>();
+
     this.movieService.all()
       .pipe(
         take(1) // Take the only one response of the observable

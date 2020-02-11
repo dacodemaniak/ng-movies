@@ -4,7 +4,7 @@
     <mat-form-field>
         <mat-label>By years</mat-label>
         <mat-select [(ngModel)]="year">
-            <mat-option [value]="'all'">All...</mat-option>
+            <mat-option [value]="0">All...</mat-option>
             <mat-option *ngFor="let year of years" [value]="year">
                 {{ year }}
             </mat-option>
@@ -13,7 +13,7 @@
 </div>
 
 <div *ngFor="let movie of movies">
-    <mat-card class="movie">
+    <mat-card class="movie" *ngIf="movie.year == year || year == 0">
         <mat-card-title class="title"
             [ngClass]="{'old': movie.year < 2000}"
         >
