@@ -1,23 +1,20 @@
 <h1>{{ title | uppercase }}</h1>
 
 <div *ngFor="let movie of movies">
-    <div class="movie" *ngIf="(movie.country.iso == defaultCountry) || defaultCountry == 'all'">
-        <h2 class="title"
+    <mat-card class="movie">
+        <mat-card-title class="title"
             [ngClass]="{'old': movie.year < 2000}"
         >
             {{ movie.title }}
-        </h2>
-        <h3>{{ movie.year }}</h3>
-    </div>
+        </mat-card-title>
+
+        <mat-card-content>
+        </mat-card-content>
+
+        <mat-card-footer>
+            {{ movie.year }}
+        </mat-card-footer>
+    </mat-card>
 </div>
 
-<div id="filter">
-    <select size="1" [(ngModel)]="defaultCountry">
-        <option value="all" selected>
-            All
-        </option>
-        <option *ngFor="let data of countries | keyvalue" value="{{ data.key }}">
-            {{ data.value.text }}
-        </option>
-    </select>
-</div>
+

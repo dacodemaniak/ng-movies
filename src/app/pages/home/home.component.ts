@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MovieService } from './../../core/services/movie.service';
+
+import { take } from 'rxjs/operators';
+import { Movie } from './../../core/models/movie';
 
 @Component({
   selector: 'app-home',
@@ -11,44 +15,28 @@ export class HomeComponent implements OnInit {
 
   public defaultCountry: string = 'all';
 
-  public movies: any[] = [
-    {
-      title: 'Joker',
-      year: 2019,
-      country: {
-        iso: 'us',
-        text: 'United States'
-      },
-      shown: true
-    },
-    {
-      title: 'Avengers',
-      year: 2018,
-      country: {
-        iso: 'us',
-        text: 'United States'
-      },
-      shown: true
-    },
-    {
-      title: 'Il était une fois dans l\'ouest',
-      year: 1975,
-      country: {
-        iso: 'it',
-        text: 'Italy'
-      },
-      shown: true
-    }
-  ];
+  public movies: Movie[] = [];
 
   public countries: Map<string, any> = new Map<string, any>();
 
-  constructor() { }
+  constructor(
+    private movieService: MovieService
+  ) { }
 
   ngOnInit() {
-    this.movies.forEach((movie: any) => {
-      this.countries.set(movie.country.iso, movie.country);
-    });
+
+
+    this.movieService.all()
+      .pipe(
+        take(1) // Take the only one response of the observable
+      )
+      .subscribe((response: any[]) => {
+        console.log(`Response : ${JSON.stringify(response)}`);
+        this.movies = response.map((movie: Movie) => {
+          return new Movie().deserialize(movie)
+        });
+        console.log(`Response : ${JSON.stringify(this.movies)}`);
+      });
   }
 
 }
