@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   public movies: Movie[] = [];
 
-  public years: Set<number> = new Set<number>();
+  public years: number[] = [];
 
   constructor(
     private movieService: MovieService
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
 
-
+    const years: Set<number> = new Set<number>();
     this.movieService.all()
       .pipe(
         take(1) // Take the only one response of the observable
@@ -33,10 +33,10 @@ export class HomeComponent implements OnInit {
       .subscribe((response: any[]) => {
         this.movies = response.map((movie: Movie) => {
           // Add year to set for further filter
-          this.years.add(movie.year);
+          years.add(movie.year);
           return new Movie().deserialize(movie)
         });
-        console.log(`Year : ${JSON.stringify(this.years.size)}`);
+        this.years = Array.from(years).sort();
       });
   }
 
