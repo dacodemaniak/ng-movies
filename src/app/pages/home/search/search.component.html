@@ -1,0 +1,10 @@
+<form>
+    <fieldset>
+        <mat-form-field class="">
+            <mat-label>Search for...</mat-label>
+            <input matInput placeholder="Ex. Joker" [(ngModel)]="searchTerm">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="doSearch()">Ok</button>
+    </fieldset>
+</form>

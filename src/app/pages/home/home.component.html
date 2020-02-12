@@ -12,6 +12,9 @@
     </mat-form-field>
 </div>
 
+<div id="search">
+    <app-search></app-search>
+</div>
 <div *ngFor="let movie of movies">
     <mat-card class="movie" *ngIf="movie.year == year || year == 0">
         <mat-card-title class="title"
