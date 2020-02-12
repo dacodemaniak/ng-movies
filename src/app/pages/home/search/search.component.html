@@ -2,7 +2,7 @@
     <fieldset>
         <mat-form-field class="">
             <mat-label>Search for...</mat-label>
-            <input matInput name="searchTerm" placeholder="Ex. Joker" [(ngModel)]="searchTerm">
+            <input matInput type="search" name="searchTerm" placeholder="Ex. Joker" [(ngModel)]="searchTerm">
         </mat-form-field>
         <div class="live-search" [hidden]="movies.length == 0">
             <ul>
