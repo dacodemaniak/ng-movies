@@ -13,8 +13,9 @@
 </div>
 
 <div id="search">
-    <app-search></app-search>
+    <app-search (movies)="receiveMovies($event)"></app-search>
 </div>
+
 <div *ngFor="let movie of movies">
     <mat-card class="movie" *ngIf="movie.year == year || year == 0">
         <mat-card-title class="title"
