@@ -1,7 +1,18 @@
-<form>
+<form [formGroup]="searchForm">
     <mat-form-field class="">
         <mat-label>Search for...</mat-label>
-        <input matInput type="search" name="searchTerm" placeholder="Ex. Joker" [(ngModel)]="searchTerm">
+        <input 
+            matInput 
+            type="search" 
+            placeholder="Ex. Joker" 
+            formControlName="searchTerm"
+            (ngModelChange)="reload()"
+        >
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="doSearch()">Ok</button>
+    <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="doSearch()"
+        [disabled]="searchForm.invalid"
+    >Ok</button>
 </form>
