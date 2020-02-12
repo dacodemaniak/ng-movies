@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MovieService } from 'src/app/core/services/movie.service';
+import { Movie } from 'src/app/core/models/movie';
+
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
@@ -8,8 +12,9 @@ import { Component, OnInit } from '@angular/core';
 export class SearchComponent implements OnInit {
 
   public searchTerm: string;
-  
-  constructor() { }
+  public movies: Movie[] = [];
+
+  constructor(private movieService: MovieService) { }
 
   ngOnInit() {
   }
@@ -17,6 +22,16 @@ export class SearchComponent implements OnInit {
   public doSearch(): void {
     if (this.searchTerm.trim().length > 0) {
       console.log(`Search for : ${this.searchTerm}`);
+      this.movieService.byTitle(this.searchTerm.trim())
+        .pipe(
+          take(1)
+        )
+        .subscribe((response: Movie[]) => {
+          this.movies = response.map((movie: any) => {
+            return new Movie().deserialize(movie);
+          });
+          console.log(`Movies found : ${JSON.stringify(this.movies)}`);
+        });
     }
   }
 
