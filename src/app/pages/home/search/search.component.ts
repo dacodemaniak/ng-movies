@@ -21,7 +21,6 @@ export class SearchComponent implements OnInit {
 
   public doSearch(): void {
     if (this.searchTerm.trim().length > 0) {
-      console.log(`Search for : ${this.searchTerm}`);
       this.movieService.byTitle(this.searchTerm.trim())
         .pipe(
           take(1)
@@ -30,7 +29,6 @@ export class SearchComponent implements OnInit {
           this.movies = response.map((movie: any) => {
             return new Movie().deserialize(movie);
           });
-          console.log(`Movies found : ${JSON.stringify(this.movies)}`);
         });
     }
   }

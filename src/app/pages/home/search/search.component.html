@@ -4,7 +4,13 @@
             <mat-label>Search for...</mat-label>
             <input matInput name="searchTerm" placeholder="Ex. Joker" [(ngModel)]="searchTerm">
         </mat-form-field>
-
+        <div class="live-search" [hidden]="movies.length == 0">
+            <ul>
+                <li *ngFor="let movie of movies">
+                    {{ movie.title }}
+                </li>
+            </ul>
+        </div>
         <button mat-raised-button color="primary" (click)="doSearch()">Ok</button>
     </fieldset>
 </form>
