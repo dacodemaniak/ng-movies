@@ -1,20 +1,25 @@
 <h1>{{ title | uppercase }}</h1>
 
-<div id="filter">
-    <mat-form-field>
-        <mat-label>By years</mat-label>
-        <mat-select [(ngModel)]="year">
-            <mat-option [value]="0">All...</mat-option>
-            <mat-option *ngFor="let year of years" [value]="year">
-                {{ year }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-</div>
-
-<div id="search">
+<mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <div id="filter">
+            <mat-form-field>
+                <mat-label>By years</mat-label>
+                <mat-select [(ngModel)]="year">
+                    <mat-option [value]="0">All...</mat-option>
+                    <mat-option *ngFor="let year of years" [value]="year">
+                        {{ year }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    <span class="example-spacer"></span>
     <app-search (movies)="receiveMovies($event)"></app-search>
-</div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+
 
 <div *ngFor="let movie of movies">
     <mat-card class="movie" *ngIf="movie.year == year || year == 0">

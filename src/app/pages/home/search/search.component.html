@@ -1,9 +1,7 @@
 <form>
-    <fieldset>
-        <mat-form-field class="">
-            <mat-label>Search for...</mat-label>
-            <input matInput type="search" name="searchTerm" placeholder="Ex. Joker" [(ngModel)]="searchTerm">
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="doSearch()">Ok</button>
-    </fieldset>
+    <mat-form-field class="">
+        <mat-label>Search for...</mat-label>
+        <input matInput type="search" name="searchTerm" placeholder="Ex. Joker" [(ngModel)]="searchTerm">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="doSearch()">Ok</button>
 </form>
