@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
   public searchTerm: string;
 
   @Output() movies: EventEmitter<Movie[]> = new EventEmitter<Movie[]>();
+  
   constructor(private movieService: MovieService) { }
   
 
