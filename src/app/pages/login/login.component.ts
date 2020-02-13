@@ -40,4 +40,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  public doLogin(): void {
+    // My logic here !!!
+  }
 }
