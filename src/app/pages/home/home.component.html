@@ -23,7 +23,7 @@
 
 
 
-<div *ngFor="let movie of movies">
+<div *ngFor="let movie of movies | async">
     <mat-card class="movie" *ngIf="movie.year == year || year == 0">
         <mat-card-title class="title"
             [ngClass]="{'old': movie.year < 2000}"

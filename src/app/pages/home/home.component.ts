@@ -3,6 +3,7 @@ import { MovieService } from './../../core/services/movie.service';
 
 import { take } from 'rxjs/operators';
 import { Movie } from './../../core/models/movie';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -16,30 +17,14 @@ export class HomeComponent implements OnInit {
   public year: number = 0;
   public years: number[] = [];
   
-  public movies: Movie[] = [];
-
-  
+  public movies: Observable<Movie[]>;
 
   constructor(
     private movieService: MovieService
   ) { }
 
   ngOnInit() {
-
-    const years: Set<number> = new Set<number>();
-
-    this.movieService.all()
-      .pipe(
-        take(1) // Take the only one response of the observable
-      )
-      .subscribe((response: Movie[]) => {
-        this.movies = response;
-        this.movies.map((movie: Movie) => {
-          // Add year to set for further filter
-          years.add(movie.year);
-        });
-        this.years = Array.from(years).sort();
-      });
+    this.movies = this.movieService.all();
   }
 
   public receiveMovies($event): void {
