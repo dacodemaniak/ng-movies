@@ -7,6 +7,9 @@
             placeholder="Your login" 
             formControlName="login"
         >
+        <mat-error *ngIf="login.touched && login.invalid">
+            Your login is required and must have at least 5 chars.
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field class="">
@@ -14,12 +17,20 @@
         <input 
             matInput 
             type="password" 
-            placeholder="Your login" 
+            placeholder="Your password" 
             formControlName="password"
         >
+        <mat-error *ngIf="password.touched && password.invalid">
+            Your password is required and must be 8 chars length minimum.
+        </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="doLogin()">Go</button>
+    <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="doLogin()"
+        [disabled]="loginForm.invalid"
+    >Go</button>
 </form>
 
 <!-- TODO : place routerLink to registering user if not -->
