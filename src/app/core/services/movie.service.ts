@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from './../../../environments/environment';
 import { Movie } from './../models/movie';
-import { Observable } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { take, map } from 'rxjs/operators';
 
@@ -9,6 +9,9 @@ import { take, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class MovieService {
+
+  private _years: Set<number> = new Set<number>();
+  public years$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>(Array.from(this._years).sort());
 
   constructor(
     private httpClient: HttpClient
@@ -26,6 +29,7 @@ export class MovieService {
   }
 
   public all(): Observable<Movie[]> {
+    this._years = new Set<number>();
     const apiRoute: string = `${environment.apiRoot}movie`;
     return this.httpClient.get<Movie[]>(
       apiRoute
@@ -33,21 +37,33 @@ export class MovieService {
     .pipe(
       take(1),
       map((response) => {
-        return response.map((item) => new Movie().deserialize(item))
+        return response.map((item) => 
+         {
+           this._years.add(item.year);
+           this.years$.next(Array.from(this._years).sort());
+           return new Movie().deserialize(item)
+          });
+          
       })
     );
   }
 
   public byTitle(title: string): Observable<Movie[]> {
     const apiRoute: string = `${environment.apiRoot}movie/title/${title}`;
-    
+    this._years = new Set<number>();
+
     return this.httpClient.get<any[]>(
       apiRoute
     )
     .pipe(
       take(1),
       map((response) => {
-        return response.map((item) => new Movie().deserialize(item))
+        return response.map((item) => {
+          this._years.add(item.year);
+          this.years$.next(Array.from(this._years).sort());
+            return new Movie().deserialize(item)
+          }
+        );
       })
     );
   }
