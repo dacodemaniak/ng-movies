@@ -32,11 +32,11 @@ export class HomeComponent implements OnInit {
       .pipe(
         take(1) // Take the only one response of the observable
       )
-      .subscribe((response: any[]) => {
-        this.movies = response.map((movie: Movie) => {
+      .subscribe((response: Movie[]) => {
+        this.movies = response;
+        this.movies.map((movie: Movie) => {
           // Add year to set for further filter
           years.add(movie.year);
-          return new Movie().deserialize(movie)
         });
         this.years = Array.from(years).sort();
       });
