@@ -59,6 +59,8 @@ export class SearchComponent implements OnInit {
       this.movies.emit(
         this.movieService.byTitle(this.searchTerm.value.trim())
       )
+    } else {
+      this.movies.emit(this.movieService.all());
     }
   }
 
