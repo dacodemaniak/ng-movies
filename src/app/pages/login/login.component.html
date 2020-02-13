@@ -1,1 +1,21 @@
-<p>login works!</p>
+<form [formGroup]="loginForm">
+    <mat-form-field class="">
+        <mat-label>Login</mat-label>
+        <input 
+            matInput 
+            type="text" 
+            placeholder="Your login" 
+            formControlName="login"
+        >
+    </mat-form-field>
+
+    <mat-form-field class="">
+        <mat-label>Password</mat-label>
+        <input 
+            matInput 
+            type="password" 
+            placeholder="Your login" 
+            formControlName="password"
+        >
+    </mat-form-field>
+</form>
