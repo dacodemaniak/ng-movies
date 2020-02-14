@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
   private _registeredUsers: any[];
+  
+  public isAuthenticated: boolean = false;
 
   constructor() { 
     this._registeredUsers = new Array<any>();
@@ -14,6 +16,10 @@ export class UserService {
         password: 'totototo'
       }
     );
+    const userAsString: string = localStorage.getItem('user');
+    if (userAsString !== null) {
+      this.isAuthenticated = true;
+    }
   }
 
   public authenticate(user: any): boolean {
@@ -25,8 +31,14 @@ export class UserService {
         'user',
         JSON.stringify(user)
       );
+      this.isAuthenticated = true;
       return true;
     }
     return false;
+  }
+
+  public logout(): void {
+    localStorage.removeItem('user');
+    this.isAuthenticated = false;
   }
 }

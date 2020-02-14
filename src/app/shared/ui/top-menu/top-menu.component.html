@@ -3,13 +3,16 @@
         <ul>
             <li>
                 <a [routerLink]="['home']">
-                    Home
+                    <mat-icon>home</mat-icon>
                 </a>
             </li>
-            <li>
+            <li *ngIf="!userService.isAuthenticated">
                 <a [routerLink]="['login']">
-                    Login
+                    <mat-icon class="my-icons">account_box</mat-icon>
                 </a>
+            </li>
+            <li *ngIf="userService.isAuthenticated" (click)="doLogout()">
+                <mat-icon class="my-icons">highlight_off</mat-icon>
             </li>
         </ul>
     </nav>

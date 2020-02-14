@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../material/material.module';
 
 
 
@@ -11,10 +12,15 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
+    MaterialModule
   ],
   exports: [
     TopMenuComponent,
     FooterComponent
   ]
 })
-export class UiModule { }
+export class UiModule { 
+  constructor() {
+    console.log('UI was loaded');
+  }
+}
