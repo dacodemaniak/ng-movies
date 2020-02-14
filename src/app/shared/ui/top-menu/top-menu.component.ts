@@ -22,7 +22,6 @@ export class TopMenuComponent implements OnInit {
   }
 
   public doLogout(): void {
-    console.log('Disconnect user');
     this.userService.logout();
   }
 

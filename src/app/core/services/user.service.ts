@@ -28,9 +28,13 @@ export class UserService {
       this._user = this._registeredUsers.find((obj: UserInterface) => obj.token == userAsObject.token);
       if (this._user !== undefined) {
         this._user.isAuthenticated = true;
+        console.log('Notify authenticated user');
         this.userSubject$.next(this._user);
+      } else {
+        console.log('Something went wrong');
       }
     } else {
+      console.log('Notify unidentified user');
       this.userSubject$.next(null);
     }
     
@@ -47,7 +51,7 @@ export class UserService {
     if (this._user !== undefined) {
       localStorage.setItem(
         'user',
-        this._user.token
+        JSON.stringify({token: this._user.token})
       );
       this._user.isAuthenticated = true;
       this.userSubject$.next(this._user);
