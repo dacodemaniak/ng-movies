@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './pages/home/search/search.component';
 
 import { AppConfig } from './core/init/app-config';
+import { MovieComponent } from './pages/movie/movie.component';
 
 
 export function initializeApp(appConfig: AppConfig) {
@@ -28,7 +29,8 @@ export function initializeApp(appConfig: AppConfig) {
     AppComponent,
     HomeComponent,
     LoginComponent,
-    SearchComponent
+    SearchComponent,
+    MovieComponent
   ],
   imports: [
     BrowserModule,
