@@ -6,13 +6,13 @@
                     <mat-icon>home</mat-icon>
                 </a>
             </li>
-            <li *ngIf="!userService.isAuthenticated">
+            <li *ngIf="!user">
                 <a [routerLink]="['login']">
                     <mat-icon class="my-icons">account_box</mat-icon>
                 </a>
             </li>
-            <li *ngIf="userService.isAuthenticated" (click)="doLogout()">
-                <mat-icon class="my-icons">highlight_off</mat-icon>
+            <li *ngIf="user" (click)="doLogout()">
+                {{ user.login }}<mat-icon class="my-icons">highlight_off</mat-icon>
             </li>
         </ul>
     </nav>
