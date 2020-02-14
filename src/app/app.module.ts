@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -15,6 +15,14 @@ import { MaterialModule } from './shared/material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './pages/home/search/search.component';
 
+import { AppConfig } from './core/init/app-config';
+
+
+export function initializeApp(appConfig: AppConfig) {
+  return (): Promise<any> => { 
+    return appConfig.init();
+  }
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +40,10 @@ import { SearchComponent } from './pages/home/search/search.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    AppConfig,
+    { provide: APP_INITIALIZER,useFactory: initializeApp, deps: [AppConfig], multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

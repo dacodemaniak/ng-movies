@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from './../../core/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) { }
 
   public get login(): AbstractControl {
@@ -51,7 +53,14 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['home']);      
     } else {
       // TODO : some snackbar to keep user informed
-
+      this.snackBar.open(
+        'Sorry, your identification failed!',
+        '',
+        {
+          duration: 2500,
+          verticalPosition: 'top'
+        }
+      );
       this.login.setValue('');
       this.password.setValue('');
     }
