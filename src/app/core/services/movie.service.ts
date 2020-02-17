@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from './../../../environments/environment';
 import { Movie } from './../models/movie';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { take, map } from 'rxjs/operators';
+import { take, map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -72,12 +72,19 @@ export class MovieService {
   public byId(id: number): Observable<any> {
     const apiRoot: string = `${environment.apiRoot}movie/${id}`;
     return this.httpClient.get<any>(
-      apiRoot
+      apiRoot,
+      {
+        observe: 'response'
+      }
     )
     .pipe(
       take(1),
       map((response) => {
-        return response;
+        return response.body;
+      }),
+      catchError((error: any) => {
+        console.log(`Something went wrong : ${JSON.stringify(error)}`);
+        return throwError(error) 
       })
     );
   }
