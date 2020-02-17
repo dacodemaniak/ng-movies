@@ -82,7 +82,7 @@ export class MovieService {
     );
   }
 
-  public update(movie: any): Observable<any> {
+  public update(movie: any): Observable<HttpResponse<any>> {
     const apiRoot: string = `${environment.apiRoot}movie/modify`;
     
     return this.httpClient.put(

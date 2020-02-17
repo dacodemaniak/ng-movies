@@ -48,6 +48,7 @@ export class MovieComponent implements OnInit {
         Validators.required
       ]
     });
+
     this.route.paramMap.subscribe((paramMap: any) => {
       console.log(`Params : ${paramMap.params.id}`);
       this.movieService.byId(paramMap.params.id).subscribe((movie: any) => {
