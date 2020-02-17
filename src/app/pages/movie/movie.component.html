@@ -1,1 +1,22 @@
 <p>{{ movie | json }}</p>
+
+<!-- Simple form to update movie -->
+<div *ngIf="movieForm">
+    <form [formGroup]="movieForm">
+        <mat-form-field class="">
+            <mat-label>Update synopsis</mat-label>
+            <textarea 
+                matInput 
+                placeholder="Ex. Once upon a time..."
+                formControlName="synopsis"
+                ></textarea>
+        </mat-form-field>
+        <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="doUpdate()"
+            [disabled]="movieForm.invalid"
+        >Update</button>
+    </form>    
+</div>
+

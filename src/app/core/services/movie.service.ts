@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from './../../../environments/environment';
 import { Movie } from './../models/movie';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { take, map } from 'rxjs/operators';
 
 @Injectable({
@@ -80,5 +80,22 @@ export class MovieService {
         return response;
       })
     );
+  }
+
+  public update(movie: any): Observable<any> {
+    const apiRoot: string = `${environment.apiRoot}movie/modify`;
+    
+    return this.httpClient.put(
+      apiRoot,
+      movie,
+      {
+        observe: 'response'
+      }
+    ).pipe(
+      take(1),
+      map((response: HttpResponse<any>) => {
+        return response;
+      })
+    )
   }
 }
