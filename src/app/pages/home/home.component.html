@@ -38,6 +38,9 @@
 
         <mat-card-footer>
             {{ movie.year }}
+            <mat-icon
+                (click)="moveTo(movie.idMovie)"
+            >more</mat-icon>
         </mat-card-footer>
     </mat-card>
 </div>

@@ -4,6 +4,9 @@ import { MovieService } from './../../core/services/movie.service';
 import { take } from 'rxjs/operators';
 import { Movie } from './../../core/models/movie';
 import { Observable, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/core/services/user.service';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +24,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   public movies: Observable<Movie[]>;
 
   constructor(
-    public movieService: MovieService
+    public movieService: MovieService,
+    public userService: UserService,
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -38,6 +44,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.yearSubscription.unsubscribe();
   }
   
+  public moveTo(idMovie: number): void {
+    if( this.userService.user && this.userService.user !== null) {
+      this.router.navigate(['../','movie', idMovie]);
+    } else {
+      // Load a toast and route to login
+      const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
+        'You have to login or create an account before',
+        null,
+        {
+          duration: 2500
+        }
+      );
+      snack.afterDismissed().subscribe((status: any) => {
+        this.router.navigate(['../', 'login'])
+      });
+      
+    }
+  }
+
   public receiveMovies($event): void {
     this.movies = $event;
     console.log(`Received ${JSON.stringify(this.movies)}`);
