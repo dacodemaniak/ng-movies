@@ -84,7 +84,7 @@ export class MovieService {
       }),
       catchError((error: any) => {
         console.log(`Something went wrong : ${JSON.stringify(error)}`);
-        return throwError(error) 
+        return throwError(error.status) 
       })
     );
   }
