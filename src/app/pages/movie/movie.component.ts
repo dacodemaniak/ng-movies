@@ -50,7 +50,7 @@ export class MovieComponent implements OnInit {
     });
 
     this.route.data.subscribe((data: {movie: any}) => {
-        this.movie = data;
+        this.movie = data.movie;
         this.synopsis.setValue(this.movie.synopsis)
     });
   }
