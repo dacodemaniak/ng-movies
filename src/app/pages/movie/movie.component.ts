@@ -49,12 +49,9 @@ export class MovieComponent implements OnInit {
       ]
     });
 
-    this.route.paramMap.subscribe((paramMap: any) => {
-      console.log(`Params : ${paramMap.params.id}`);
-      this.movieService.byId(paramMap.params.id).subscribe((movie: any) => {
-        this.movie = movie;
+    this.route.data.subscribe((data: {movie: any}) => {
+        this.movie = data;
         this.synopsis.setValue(this.movie.synopsis)
-      })
     });
   }
 

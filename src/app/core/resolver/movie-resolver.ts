@@ -1,7 +1,7 @@
 import { Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { MovieService } from '../services/movie.service';
-import { catchError, take } from 'rxjs/operators';
+import { catchError, take, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -18,9 +18,12 @@ export class MovieResolver implements Resolve<any> {
 
         console.log(`Hello resolver : ${id}`);
 
-        this.movieService.byId(id)
+        return this.movieService.byId(id)
             .pipe(
                 take(1),
+                map((response) => {
+                    return response
+                }),
                 catchError((error: any, caught: any): Observable<any> => {
                     console.log(`Resolver failed with : ${JSON.stringify(error)}`);
                     
