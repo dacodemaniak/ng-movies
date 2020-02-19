@@ -31,8 +31,20 @@
                 {{ movie.title }}
  
 
-            <mat-icon (click)="likeIt(movie)" *ngIf="movie.like == 0">favorite_border</mat-icon>
-            <mat-icon *ngIf="movie.like > 0" matBadge="{{ movie.like }}" matBadgeColor="warn">favorite</mat-icon>
+            <mat-icon 
+                (click)="likeIt(movie)" 
+                *ngIf="movie.like == 0"
+            >
+                favorite_border
+            </mat-icon>
+
+            <mat-icon 
+                *ngIf="movie.like > 0" 
+                matBadge="{{ movie.like }}" 
+                matBadgeColor="warn"
+            >
+                favorite
+            </mat-icon>
         </mat-card-title>
 
         <mat-card-content>

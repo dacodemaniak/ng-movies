@@ -44,12 +44,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         // Update interface for this movie
         let movie: Movie = new Movie().deserialize(socketMessage._data);
         console.log(`Update come from wsServer : ${JSON.stringify(movie)}`);
-        // Get Movies from observable
+        
+        // Update movie in observable
         this.movies = this.movies.pipe(
           map((movies: Movie[]): Movie[] => {
-            let previousMovie: number = movies.findIndex((obj: Movie, index: number) => obj.idMovie == movie.idMovie);
-            console.log(`Replace movie at row ${previousMovie}`);
-            movies[previousMovie] = movie;
+            let movieIndex: number = movies.findIndex(
+              (obj: Movie, index: number) => obj.idMovie == movie.idMovie
+            );
+            console.log(`Replace movie at row ${movieIndex}`);
+            movies[movieIndex] = movie;
             return movies;
           })
         );
@@ -73,8 +76,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   
   public likeIt(movie: Movie): void {
-    movie.like += 1;
+    movie.like = movie.like + 1;
 
+    console.log(`Movie updated : ${JSON.stringify(movie)}`);
     // Emit a new update to ws...
     const message: any = {
       message: 'like',
@@ -85,8 +89,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     // Update the observable (retains values)
     this.movies = this.movies.pipe(
       map((movies: Movie[]): Movie[] => {
-        let previousMovie: number = movies.findIndex((obj: Movie, index: number) => obj.idMovie == movie.idMovie);
-        movies[previousMovie] = movie;
+        let movieIndex: number = movies.findIndex(
+          (obj: Movie, index: number) => obj.idMovie == movie.idMovie
+        );
+        movies[movieIndex] = movie;
         return movies;
       })
     );
