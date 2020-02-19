@@ -8,6 +8,9 @@ import { Router, NavigationExtras } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
+import { WebSocketSubject } from 'rxjs/webSocket';
+
+import { environment } from './../../../environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,6 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   public movies: Observable<Movie[]>;
 
+  private socket$: WebSocketSubject<any>;
+
   constructor(
     public movieService: MovieService,
     public userService: UserService,
@@ -31,6 +36,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.socket$ = new WebSocketSubject<any>(environment.wssAddress);
+    this.socket$.subscribe((socketMessage: any) => {
+      console.log(`Something come from wsServer : ${JSON.stringify(socketMessage)}`)
+    },
+    (err) => console.error('Erreur levée : ' + JSON.stringify(err)),
+    () => console.warn('Completed!')
+    );
+    this.socket$.next('Ping');
+
     this.movies = this.movieService.all();
     
     this.yearSubscription = this.movieService.years$
