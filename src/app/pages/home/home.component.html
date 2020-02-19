@@ -28,9 +28,11 @@
         <mat-card-title class="title"
             [ngClass]="{'old': movie.year < 2000}"
         >
-            <a [routerLink]="['../', 'movie', movie.idMovie]" [state]="{movie: movie.idMovie}">
                 {{ movie.title }}
-            </a>
+ 
+
+            <mat-icon (click)="likeIt(movie)" *ngIf="movie.like == 0">favorite_border</mat-icon>
+            <mat-icon *ngIf="movie.like > 0" matBadge="{{ movie.like }}" matBadgeColor="warn">favorite</mat-icon>
         </mat-card-title>
 
         <mat-card-content>

@@ -40,10 +40,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.socket$.subscribe((socketMessage: any) => {
       console.log(`Something come from wsServer : ${JSON.stringify(socketMessage)}`)
     },
-    (err) => console.error('Erreur levée : ' + JSON.stringify(err)),
+    (err) => console.error('Exception raised : ' + JSON.stringify(err)),
     () => console.warn('Completed!')
     );
-    this.socket$.next('Ping');
+    
 
     this.movies = this.movieService.all();
     
@@ -58,6 +58,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.yearSubscription.unsubscribe();
   }
   
+  public likeIt(movie: Movie): void {
+    movie.like += 1;
+  }
+
   public moveTo(idMovie: number): void {
     if( this.userService.user && this.userService.user !== null) {
       this.router.navigate(['../','movie', idMovie]);
