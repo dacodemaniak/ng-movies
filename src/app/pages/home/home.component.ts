@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.socket$ = new WebSocketSubject<any>(environment.wssAddress);
+    
     this.socket$.subscribe((socketMessage: any) => {
       
       if (socketMessage._message === 'like') {
@@ -73,7 +74,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   public likeIt(movie: Movie): void {
     movie.like += 1;
-    
+
     // Emit a new update to ws...
     const message: any = {
       message: 'like',
