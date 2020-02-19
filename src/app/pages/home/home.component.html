@@ -28,7 +28,7 @@
         <mat-card-title class="title"
             [ngClass]="{'old': movie.year < 2000}"
         >
-            <a [routerLink]="['../', 'movie', movie.idMovie]">
+            <a [routerLink]="['../', 'movie', movie.idMovie]" [state]="{movie: movie.idMovie}">
                 {{ movie.title }}
             </a>
         </mat-card-title>

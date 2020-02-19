@@ -4,7 +4,7 @@ import { MovieService } from './../../core/services/movie.service';
 import { take } from 'rxjs/operators';
 import { Movie } from './../../core/models/movie';
 import { Observable, Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
@@ -57,7 +57,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       );
       snack.afterDismissed().subscribe((status: any) => {
-        this.router.navigate(['../', 'login'])
+        const navigationExtras: NavigationExtras = {state: {movie: idMovie}};
+        this.router.navigate(['../', 'login'], navigationExtras);
       });
       
     }
