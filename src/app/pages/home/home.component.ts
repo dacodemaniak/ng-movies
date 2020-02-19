@@ -49,7 +49,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     
     this.yearSubscription = this.movieService.years$
       .subscribe((_years) => {
-        console.log('Years was updated : ' + JSON.stringify(_years));
         this.years = _years;
     });
   }
@@ -60,6 +59,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   public likeIt(movie: Movie): void {
     movie.like += 1;
+
+    // Emit a new update to ws...
+    const message: any = {
+      message: 'like',
+      data: movie
+    };
+    this.socket$.next(message);
   }
 
   public moveTo(idMovie: number): void {
