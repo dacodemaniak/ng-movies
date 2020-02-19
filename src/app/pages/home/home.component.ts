@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MovieService } from './../../core/services/movie.service';
 
-import { take } from 'rxjs/operators';
+import { take, switchMap, map } from 'rxjs/operators';
 import { Movie } from './../../core/models/movie';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
@@ -38,7 +38,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.socket$ = new WebSocketSubject<any>(environment.wssAddress);
     this.socket$.subscribe((socketMessage: any) => {
-      console.log(`Something come from wsServer : ${JSON.stringify(socketMessage)}`)
+      
+      if (socketMessage._message === 'like') {
+        // Update interface for this movie
+        let movie: Movie = new Movie().deserialize(socketMessage._data);
+        console.log(`Update come from wsServer : ${JSON.stringify(movie)}`);
+        // Get Movies from observable
+        this.movies = this.movies.pipe(
+          map((movies: Movie[]): Movie[] => {
+            let previousMovie: number = movies.findIndex((obj: Movie, index: number) => obj.idMovie == movie.idMovie);
+            console.log(`Replace movie at row ${previousMovie}`);
+            movies[previousMovie] = movie;
+            return movies;
+          })
+        );
+      }
     },
     (err) => console.error('Exception raised : ' + JSON.stringify(err)),
     () => console.warn('Completed!')
@@ -59,13 +73,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   public likeIt(movie: Movie): void {
     movie.like += 1;
-
+    
     // Emit a new update to ws...
     const message: any = {
       message: 'like',
       data: movie
     };
     this.socket$.next(message);
+
+    // Update the observable (retains values)
+    this.movies = this.movies.pipe(
+      map((movies: Movie[]): Movie[] => {
+        let previousMovie: number = movies.findIndex((obj: Movie, index: number) => obj.idMovie == movie.idMovie);
+        movies[previousMovie] = movie;
+        return movies;
+      })
+    );
   }
 
   public moveTo(idMovie: number): void {
