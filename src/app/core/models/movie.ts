@@ -3,6 +3,7 @@ export class Movie {
     public title: string;
     public year: number;
     public like: number = 0;
+    public animationState: string = 'initial';
 
     public deserialize(datas: any): Movie {
         Object.assign(this, datas);
