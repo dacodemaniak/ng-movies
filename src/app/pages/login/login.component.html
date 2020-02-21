@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm">
+<form [formGroup]="loginForm" *ngIf="!processing">
     <mat-form-field class="">
         <mat-label>Login</mat-label>
         <input 
@@ -32,5 +32,8 @@
         [disabled]="loginForm.invalid"
     >Go</button>
 </form>
+
+<mat-progress-bar *ngIf="processing" mode="indeterminate"></mat-progress-bar>
+
 <!-- TODO : what if user forgot their credentials -->
 <!-- TODO : place routerLink to registering user if not -->

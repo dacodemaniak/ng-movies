@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   private _navigation: Navigation;
   private _idMovie: number;
+  public processing: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -60,26 +61,30 @@ export class LoginComponent implements OnInit {
 
   public doLogin(): void {
     // Local persistence of user
-    if (this.userService.authenticate(this.loginForm.value)) {
-      if (this._idMovie === undefined) {
-        // Road to home
-        this.router.navigate(['home']);
-      } else {
-        this.router.navigate(['../', 'movie', this._idMovie]);
-      }   
-    } else {
-      // TODO : some snackbar to keep user informed
-      this.snackBar.open(
-        'Sorry, your identification failed!',
-        '',
-        {
-          duration: 2500,
-          verticalPosition: 'top'
-        }
-      );
-      this.login.setValue('');
-      this.password.setValue('');
-    }
+    this.processing = true;
 
+    this.userService.authenticate(this.loginForm.value).then((status: boolean) => {
+      this.processing = false;
+      console.log('Never say never!');
+      if (status) {
+        if (this._idMovie === undefined) {
+          // Road to home
+          this.router.navigate(['home']);
+        } else {
+          this.router.navigate(['../', 'movie', this._idMovie]);
+        }   
+      } else {
+        this.snackBar.open(
+          'Sorry, your identification failed!',
+          '',
+          {
+            duration: 2500,
+            verticalPosition: 'top'
+          }
+        );
+        this.login.setValue('');
+        this.password.setValue('');
+      }
+    });
   }
 }

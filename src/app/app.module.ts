@@ -12,11 +12,12 @@ import { UiModule } from './shared/ui/ui.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/material/material.module';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SearchComponent } from './pages/home/search/search.component';
 
 import { AppConfig } from './core/init/app-config';
 import { MovieComponent } from './pages/movie/movie.component';
+import { TokenInterceptorService } from './core/services/token-interceptor.service';
 
 
 export function initializeApp(appConfig: AppConfig) {
@@ -44,6 +45,7 @@ export function initializeApp(appConfig: AppConfig) {
   ],
   providers: [
     AppConfig,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
     { provide: APP_INITIALIZER,useFactory: initializeApp, deps: [AppConfig], multi: true}
   ],
   bootstrap: [AppComponent]
