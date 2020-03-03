@@ -20,6 +20,7 @@
 
     <span class="example-spacer"></span>
 
+    {{ 'moviesListing.moviesResult' | translate:{'movies': (movies | async)} }}
   </mat-toolbar-row>
 </mat-toolbar>
 

@@ -40,7 +40,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
       })),
       transition('initial=>final', animate('900ms')),
       transition('final=>initial', animate('900ms'))
-    ]),    
+    ]),
   ]
 })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -50,8 +50,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   public year: number = 0;
   public years: number[] = [];
   private yearSubscription: Subscription;
-  
+
   public movies: Observable<Movie[]>;
+
+  public bidon: string[];
 
   private socket$: WebSocketSubject<any>;
 
@@ -60,18 +62,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     public userService: UserService,
     private router: Router,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+    this.bidon = [];
+  }
 
   ngOnInit() {
+    this.bidon.push('one value');
+    this.bidon.push('Two bidon');
+
     this.socket$ = new WebSocketSubject<any>(environment.wssAddress);
-    
+
     this.socket$.subscribe((socketMessage: any) => {
-      
+
       if (socketMessage._message === 'like') {
         // Update interface for this movie
         let movie: Movie = new Movie().deserialize(socketMessage._data);
         console.log(`Update come from wsServer : ${JSON.stringify(movie)}`);
-        
+
         // Update movie in observable
         this.movies = this.movies.pipe(
           map((movies: Movie[]): Movie[] => {
@@ -88,10 +95,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     (err) => console.error('Exception raised : ' + JSON.stringify(err)),
     () => console.warn('Completed!')
     );
-    
+
 
     this.movies = this.movieService.all();
-    
+
     this.yearSubscription = this.movieService.years$
       .subscribe((_years) => {
         this.years = _years;
@@ -101,7 +108,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.yearSubscription.unsubscribe();
   }
-  
+
   public likeIt(movie: Movie): void {
     movie.animationState = 'final';
 
@@ -148,7 +155,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {state: {movie: idMovie}};
         this.router.navigate(['../', 'login'], navigationExtras);
       });
-      
+
     }
   }
 

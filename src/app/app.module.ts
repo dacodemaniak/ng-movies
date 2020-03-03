@@ -24,7 +24,9 @@ import { TokenInterceptorService } from './core/services/token-interceptor.servi
 // Token LOCATION_INITIALIZED
 import { LOCATION_INITIALIZED } from '@angular/common';
 // Translate module
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService, TranslateParser } from '@ngx-translate/core';
+import { TranslateICUParser } from 'ngx-translate-parser-plural-select';
+
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 
@@ -75,6 +77,10 @@ export function initializeApp(appConfig: AppConfig) {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
+      },
+      parser: {
+        provide: TranslateParser,
+        useClass: TranslateICUParser
       }
     })
   ],
