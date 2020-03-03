@@ -20,8 +20,13 @@ import { MovieComponent } from './pages/movie/movie.component';
 import { TokenInterceptorService } from './core/services/token-interceptor.service';
 
 
+// Token LOCATION_INITIALIZED
+import { LOCATION_INITIALIZED } from '@angular/common';
+// Translate module
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+
 export function initializeApp(appConfig: AppConfig) {
-  return (): Promise<any> => { 
+  return (): Promise<any> => {
     return appConfig.init();
   }
 }
