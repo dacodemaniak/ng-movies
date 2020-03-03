@@ -16,7 +16,6 @@ export class TokenInterceptorService implements HttpInterceptor{
     }
 
     if (token) {
-      let newHeaders: HttpHeaders = req.headers;
       const bearer: string = "Bearer " + token;
 
       // Clone the original request (immutable)
@@ -28,8 +27,8 @@ export class TokenInterceptorService implements HttpInterceptor{
 
       // Finally release the updated request
       return next.handle(newRequest);
-
     }
+    
     return next.handle(req);
   }
 }
