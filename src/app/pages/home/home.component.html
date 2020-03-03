@@ -1,19 +1,19 @@
-<h1>{{ title | uppercase }}</h1>
+<h1>{{ 'global.title' | translate | uppercase }}</h1>
 
 <mat-toolbar color="primary">
       <mat-toolbar-row>
         <div id="filter">
             <mat-form-field>
-                <mat-label>By years</mat-label>
+                <mat-label>{{ 'home.yearsSelectorLabel' | translate }}</mat-label>
                 <mat-select [(ngModel)]="year">
-                    <mat-option [value]="0">All...</mat-option>
+                    <mat-option [value]="0">{{ 'home.allYears' | translate }}</mat-option>
                     <mat-option *ngFor="let year of years" [value]="year">
                         {{ year }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
-        
+
     <span class="example-spacer"></span>
 
     <app-search (movies)="receiveMovies($event)"></app-search>
@@ -29,19 +29,19 @@
             [ngClass]="{'old': movie.year < 2000}"
         >
                 {{ movie.title }}
- 
 
-            <mat-icon 
-                (click)="likeIt(movie)" 
+
+            <mat-icon
+                (click)="likeIt(movie)"
                 *ngIf="movie.like == 0"
                 [@heartGrowing]="movie.animationState"
             >
                 favorite_border
             </mat-icon>
 
-            <mat-icon 
-                *ngIf="movie.like > 0" 
-                matBadge="{{ movie.like }}" 
+            <mat-icon
+                *ngIf="movie.like > 0"
+                matBadge="{{ movie.like }}"
                 matBadgeColor="warn"
                 [@heartSmalling]="movie.animationState"
             >

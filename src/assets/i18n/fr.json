@@ -1,5 +1,10 @@
 {
   "global": {
     "title": "Films"
+  },
+  "home": {
+    "yearsSelectorLabel": "Par années",
+    "allYears": "Toutes...",
+    "movieSearchLabel": "Rechercher..."
   }
 }
