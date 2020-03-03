@@ -1,6 +1,8 @@
 {
   "global": {
-    "title": "Films"
+    "title": "Films",
+    "fr": "Français",
+    "en": "Anglais"
   },
   "home": {
     "yearsSelectorLabel": "Par années",

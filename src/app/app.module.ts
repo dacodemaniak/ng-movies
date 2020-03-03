@@ -66,7 +66,7 @@ export function initializeApp(appConfig: AppConfig) {
     AppRoutingModule,
     FormsModule,
     MaterialModule,
-    UiModule,
+    UiModule, // Needed for the interface...
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
