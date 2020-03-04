@@ -57,7 +57,7 @@
         </mat-card-content>
 
         <mat-card-footer>
-            {{ movie.year }}
+            {{ movie.year | elapsedTime | async }}
             <mat-icon
                 (click)="moveTo(movie.idMovie)"
             >more</mat-icon>
