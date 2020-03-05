@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { MovieService } from './../../core/services/movie.service';
 
 import { take, switchMap, map } from 'rxjs/operators';
@@ -12,6 +12,7 @@ import { WebSocketSubject } from 'rxjs/webSocket';
 
 import { environment } from './../../../environments/environment';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { TranslateService, TranslationChangeEvent, LangChangeEvent } from '@ngx-translate/core';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -57,11 +58,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private socket$: WebSocketSubject<any>;
 
+  private translationChange$: EventEmitter<TranslationChangeEvent>;
+  private langChange$: EventEmitter<LangChangeEvent>;
+
   constructor(
     public movieService: MovieService,
     public userService: UserService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private translateService: TranslateService
   ) {
     this.bidon = [];
   }
@@ -96,6 +101,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     () => console.warn('Completed!')
     );
 
+    this.translationChange$ = this.translateService.onTranslationChange;
+    this.translationChange$.subscribe((event: any) => {
+      console.log('Language was changed');
+    });
+
+    this.langChange$ = this.translateService.onLangChange;
+    this.langChange$.subscribe((event: any) => {
+      console.log('Language was changed');
+      this.movies = this.movies.pipe(
+        map((movies: Movie[]): Movie[] => {
+          return movies;
+        })
+      );
+    });
 
     this.movies = this.movieService.all();
 
@@ -107,6 +126,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.yearSubscription.unsubscribe();
+    this.translationChange$.unsubscribe();
+    this.langChange$.unsubscribe();
   }
 
   public likeIt(movie: Movie): void {

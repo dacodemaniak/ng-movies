@@ -10,6 +10,7 @@
     "movieSearchLabel": "Rechercher..."
   },
   "moviesListing": {
-    "moviesResult": "{movies.length, plural, =0 {Aucun film} =1 {Un film} few { {movies.length} films} many { {movies.length} films}}"
+    "moviesResult": "{movies.length, plural, =0 {Aucun film} =1 {Un film} few { {movies.length} films} many { {movies.length} films}}",
+    "lessThanOneYear": "Un an ou moins"
   }
 }
